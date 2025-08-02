@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +23,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('Dashboard.Categories.create',compact('categories'));
     }
 
     /**
@@ -30,7 +32,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'slug' => Str::slug($request->name)
+        ]);
+        Category::create($request->all());
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**

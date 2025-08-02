@@ -7,6 +7,11 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success text-center mx-auto w-50 py-2 px-3 small">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="d-flex justify-content-center align-items-center mb-3">
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-success">Add Category</a>
     </div>
