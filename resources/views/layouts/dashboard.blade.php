@@ -88,6 +88,13 @@
                 </li>
                 <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
                 <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+                <li class="nav-item d-none d-md-block">
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link text-decoration-none">Logout</button>
+                    </form>
+                </li>
+
             </ul>
             <!--end::Start Navbar Links-->
             <!--begin::End Navbar Links-->
@@ -232,7 +239,7 @@
                     class="user-image rounded-circle shadow"
                     alt="User Image"
                     />
-                    <span class="d-none d-md-inline">Alexander Pierce</span>
+                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
