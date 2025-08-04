@@ -5,9 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\CategoryController;
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->
-    middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('dashboard/categories',CategoryController::class)
-    ->middleware(['auth', 'verified']);
+Route::middleware(['auth', 'verified'])->prefix('dashboard')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::resource('categories',CategoryController::class);
+    });
 
