@@ -23,8 +23,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('Dashboard.Categories.create',compact('categories'));
+        $parents = Category::all();
+        $category = new Category();
+        return view('Dashboard.Categories.create',compact('parents', 'category'));
     }
 
     /**
