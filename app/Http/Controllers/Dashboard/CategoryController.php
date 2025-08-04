@@ -52,7 +52,13 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $parents = Category::where('id', '!=', $id)
+            ->where(function ($query) use($id){
+                $query->whereNull('parent_id')
+                    ->orWhere('parent_id', '!=', $id);
+            })->get();
+        return view('Dashboard.Categories.edit', compact('category', 'parents'));
     }
 
     /**
@@ -60,7 +66,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->update($request->all());
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
