@@ -31,6 +31,7 @@
             <td>{{ $category->parent_id }}</td>
             <td>{{ $category->name }}</td>
             <td>
+                <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-info">View</a>
                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>
                 <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
                     @csrf
