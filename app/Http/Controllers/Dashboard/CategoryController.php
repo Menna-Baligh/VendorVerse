@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -36,7 +37,15 @@ class CategoryController extends Controller
         $request->merge([
             'slug' => Str::slug($request->name)
         ]);
-        Category::create($request->all());
+
+        $data = $request->all();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('categories', 'public');
+            $data['image'] = $path;
+        }
+
+        Category::create($data);
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
@@ -69,16 +78,33 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $category = Category::findOrFail($id);
-        $category->update($request->all());
+        $data = $request->except('image');
+        $oldImg = $category->image;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('categories', 'public');
+            $data['image'] = $path;
+            if ($oldImg) {
+                Storage::disk('public')->delete($oldImg);
+            }
+        }
+        $category->update($data);
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        Category::destroy($id);
+        // Category::destroy($id);
+        $category = Category::findOrFail($id);
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+        $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

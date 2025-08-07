@@ -19,6 +19,9 @@
                     <div class="form-group">
                         <label for="image">Image</label>
                         <input type="file" class="form-control" id="image" name="image">
+                        @if($category->image)
+                            <img src="{{ asset('storage/'.$category->image) }}" alt="" width="100">
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="parent_id">Parent Category</label>
@@ -30,5 +33,5 @@
                         </select>
                     </div>
                     <div class="form-group mt-4 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{ $button_name ?? 'Add' }}</button>
                     </div>

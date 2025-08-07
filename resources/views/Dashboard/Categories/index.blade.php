@@ -19,6 +19,7 @@
     <thead>
         <tr>
         <th scope="col">#</th>
+        <th scope="col">Image</th>
         <th scope="col">parent_id</th>
         <th scope="col">name</th>
         <th scope="col">Actions</th>
@@ -28,6 +29,9 @@
         @forelse ($categories as $category)
         <tr>
             <th scope="row">{{ $category->id }}</th>
+            <td>
+                <img src="{{ asset('storage/' . $category->image) }}" class="img-fluid" style="max-width: 100px; max-height: 100px; object-fit: cover;" alt="{{ $category->name }}">
+            </td>
             <td>{{ $category->parent_id }}</td>
             <td>{{ $category->name }}</td>
             <td>
