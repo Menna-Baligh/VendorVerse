@@ -39,11 +39,7 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('categories', 'public');
-            $data['image'] = $path;
-        }
+        $data['image']= $this->uploadImage($request);
 
         Category::create($data);
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
@@ -81,14 +77,14 @@ class CategoryController extends Controller
         $data = $request->except('image');
         $oldImg = $category->image;
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('categories', 'public');
+        $path= $this->uploadImage($request);
+        if($path) {
             $data['image'] = $path;
-            if ($oldImg) {
-                Storage::disk('public')->delete($oldImg);
-            }
         }
+        if ($oldImg && isset($data['image'])) {
+            Storage::disk('public')->delete($oldImg);
+        }
+
         $category->update($data);
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
@@ -106,5 +102,14 @@ class CategoryController extends Controller
         }
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+    }
+    public function uploadImage(Request $request)
+    {
+        if(!$request->hasFile('image')) {
+            return;
+        }
+        $file = $request->file('image');
+        $path = $file->store('categories', 'public');
+        return $path;
     }
 }
