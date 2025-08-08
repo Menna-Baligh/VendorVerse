@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -76,9 +77,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        $clean_data = $request->validate(Category::rules($id));
+        // $clean_data = $request->validate(Category::rules($id)); //* now not need this line cuz i used custom validation
         $category = Category::findOrFail($id);
         $data = $request->except('image');
         $oldImg = $category->image;
