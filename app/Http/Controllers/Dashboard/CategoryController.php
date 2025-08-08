@@ -34,6 +34,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $clean_data = $request->validate(Category::rules(),[
+            'name.unique' => 'Category name must be unique' ,
+            'required' => 'This field (:attribute) is required'
+        ]);
+        // dd($clean_data); //* include only validated data in our case not include all data(description missing)
         $request->merge([
             'slug' => Str::slug($request->name)
         ]);
@@ -73,6 +78,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $clean_data = $request->validate(Category::rules($id));
         $category = Category::findOrFail($id);
         $data = $request->except('image');
         $oldImg = $category->image;

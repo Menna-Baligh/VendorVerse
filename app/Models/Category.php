@@ -14,4 +14,16 @@ class Category extends Model
         'image',
         'status'
     ];
+    public static function rules($id = 0){
+        return [
+            'name' => "required|string|min:3|max:255|unique:categories,name,$id",
+            'parent_id' => 'nullable|int|exists:categories,id',
+            'image' =>[
+                'image',
+                'mimes:jpg,jpeg,png',
+                'dimensions:min_width=100,min_height=100'
+            ],
+            'status' => "required|in:active,archived"
+        ];
+    }
 }
