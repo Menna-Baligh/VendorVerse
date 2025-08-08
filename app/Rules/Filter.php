@@ -7,6 +7,10 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class Filter implements ValidationRule
 {
+    protected $forbidden ;
+    public function __construct($forbidden){
+        $this->forbidden = $forbidden;
+    }
     /**
      * Run the validation rule.
      *
@@ -14,8 +18,8 @@ class Filter implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if(strtolower($value) == "laravel"){
-            $fail('The name field must not be "laravel"');
+        if(in_array(strtolower($value),$this->forbidden)){
+            $fail('The name field must not be "'.$value.'".');
         }
     }
 }

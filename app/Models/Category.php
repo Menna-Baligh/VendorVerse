@@ -18,7 +18,7 @@ class Category extends Model
     public static function rules($id = 0){
         return [
             'name' => ["required" ,"string","min:3","max:255","unique:categories,name,$id",
-            new Filter
+            new Filter(['laravel', 'php','vue'])
         ],
             'parent_id' => 'nullable|int|exists:categories,id',
             'image' =>[
