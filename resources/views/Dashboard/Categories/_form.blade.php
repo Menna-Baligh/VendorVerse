@@ -1,20 +1,8 @@
 <div class="form-group">
-                        <label for="name">Category Name</label>
-                        <input type="text"
-                                class="form-control"
-                                id="name" name="name"
-                                @class([
-                                    'is-invalid' => $errors->has('name'),
-                                    'form-control'
-                                ])
-                                value="{{ old('name', $category->name) }}">
-                        @error('name')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <x-form.input id="name" name="name" :value="$category->name" label="Category Name"/>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $category->description) }}</textarea>
+                        <x-form.textarea id="description" name="description" :value="$category->description" label="Description"/>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
