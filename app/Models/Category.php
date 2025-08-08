@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Rules\Filter;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -17,11 +18,7 @@ class Category extends Model
     public static function rules($id = 0){
         return [
             'name' => ["required" ,"string","min:3","max:255","unique:categories,name,$id",
-            function($attribute, $value, $fails){
-                if(strtolower($value) == "laravel"){
-                    $fails('The name field must not be "laravel"');
-                }
-            }
+            new Filter
         ],
             'parent_id' => 'nullable|int|exists:categories,id',
             'image' =>[
