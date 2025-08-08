@@ -25,4 +25,13 @@ class CategoryRequest extends FormRequest
         $id = $this->route('category');
         return Category::rules($id);
     }
+    /**
+     * Get the error messages for the defined validation rules.
+     */
+    public function messages(){
+        return [
+            'name.unique' => 'Category name must be unique' ,
+            'required' => 'This field (:attribute) is required'
+        ];
+    }
 }
