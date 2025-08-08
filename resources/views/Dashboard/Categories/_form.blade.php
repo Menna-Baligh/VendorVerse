@@ -5,24 +5,10 @@
                         <x-form.textarea id="description" name="description" :value="$category->description" label="Description"/>
                     </div>
                     <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="active" id="is_active" name="status" @checked(old('status', $category->status) == 'active')>
-                            <label class="form-check-label" for="is_active">Active</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="archived" id="is_inactive" name="status" @checked(old('status', $category->status) == 'archived')>
-                            <label class="form-check-label" for="is_inactive">Archived</label>
-                        </div>
-                        @error('status')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <x-form.radio id="status" name="status" :checked="$category->status" label="Status" :options="['active' => 'Active', 'archived' => 'Archived']"/>
                     </div>
                     <div class="form-group">
-                        <label for="image">Image</label>
-                        <input type="file" class="form-control" id="image" name="image">
-                        @error('image')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <x-form.input type="file" id="image" name="image" label="Image" accept="image/*"/>
                         @if($category->image)
                             <img src="{{ asset('storage/'.$category->image) }}" alt="" width="100">
                         @endif
