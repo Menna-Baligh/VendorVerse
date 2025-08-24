@@ -6,7 +6,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 
 
 
-Route::middleware(['auth', 'verified'])->prefix('dashboard')
+Route::middleware('auth')->prefix('dashboard')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('categories',CategoryController::class);

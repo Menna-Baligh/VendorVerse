@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         return !in_array(strtolower($value), array_map('strtolower', $parameters));
         }, 'The :attribute must not be this value.'
         );
+        Paginator::useBootstrap();
     }
 
 }
