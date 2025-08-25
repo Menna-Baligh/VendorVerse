@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Rules\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -15,6 +16,14 @@ class Category extends Model
         'image',
         'status'
     ];
+    public function scopeFilter(Builder $builder , $filters){
+        if($filters['name'] ?? false){
+            $builder->where('name' , 'like' , '%' . $filters['name'] . '%');
+        }
+        if($filters['status'] ?? false){
+            $builder->where('status' , $filters['status']);
+        }
+    }
     public static function rules($id = 0){
         return [
             'name' => ["required" ,"string","min:3","max:255","unique:categories,name,$id",
