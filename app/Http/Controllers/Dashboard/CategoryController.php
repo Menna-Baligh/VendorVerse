@@ -136,4 +136,9 @@ class CategoryController extends Controller
         $categories = Category::onlyTrashed()->paginate(3);
         return view('Dashboard.Categories.trash', compact('categories'));
     }
+    public function restore($id){
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return redirect()->route('categories.trash')->with('success', 'Category restored successfully.');
+    }
 }

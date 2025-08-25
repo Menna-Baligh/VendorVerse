@@ -39,7 +39,7 @@
             <td>{{ $category->parent_name }}</td>
 
             <td>
-                <form action="" method="POST" style="display:inline;">
+                <form action="{{ route('categories.restore', $category->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('PUT')
                     <button type="submit" class="btn btn-sm btn-success">Restore</button>
