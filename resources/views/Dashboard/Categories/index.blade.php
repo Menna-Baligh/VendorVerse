@@ -50,6 +50,7 @@
 
     <div class="d-flex justify-content-center align-items-center mb-3">
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-success">Add Category</a>
+        <a href="{{ route('categories.trash') }}" class="btn btn-sm btn-dark ms-2">Trashed Categories</a>
     </div>
     <table class="table table-hover">
     <thead>

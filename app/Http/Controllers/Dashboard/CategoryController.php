@@ -116,9 +116,9 @@ class CategoryController extends Controller
     {
         // Category::destroy($id);
         $category = Category::findOrFail($id);
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
+        // if ($category->image) {
+        //     Storage::disk('public')->delete($category->image); //* commented to keep images after soft delete
+        // }
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
@@ -130,5 +130,10 @@ class CategoryController extends Controller
         $file = $request->file('image');
         $path = $file->store('categories', 'public');
         return $path;
+    }
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->paginate(3);
+        return view('Dashboard.Categories.trash', compact('categories'));
     }
 }
