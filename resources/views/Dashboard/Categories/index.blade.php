@@ -12,6 +12,42 @@
             {{ session('success') }}
         </div>
     @endif
+    <form action="{{ URL::current() }}" method="get" class="mb-4">
+        <div class="row g-2 align-items-center justify-content-center">
+
+            <div class="col-md-4">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <x-form.input type="text" name="name" class="form-control"
+                        placeholder="Search by name..." value="{{ request('name') }}"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <select name="status" class="form-select shadow-sm">
+                    <option value="">All Status</option>
+                    <option value="active"  @selected(request('status') == 'active') >Active</option>
+                    <option value="archived"  @selected(request('status') == 'archived') >Archived</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100 shadow-sm" type="submit">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <a href="{{ URL::current() }}" class="btn btn-outline-secondary w-100 shadow-sm">
+                    <i class="bi bi-arrow-clockwise"></i> Reset
+                </a>
+            </div>
+
+        </div>
+    </form>
+
     <div class="d-flex justify-content-center align-items-center mb-3">
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-success">Add Category</a>
     </div>
@@ -46,7 +82,7 @@
         </tr>
         @empty
         <tr>
-            <td colspan="4" class="text-center">No categories found</td>
+            <td colspan="6" class="text-center">No categories found</td>
         </tr>
         @endforelse
 
@@ -54,6 +90,6 @@
     </tbody>
     </table>
     <div class="d-flex justify-content-center">
-        {{ $categories->links() }}
+        {{ $categories->withQueryString()->links() }}
     </div>
 @endsection
