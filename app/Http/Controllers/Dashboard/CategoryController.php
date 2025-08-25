@@ -141,4 +141,12 @@ class CategoryController extends Controller
         $category->restore();
         return redirect()->route('categories.trash')->with('success', 'Category restored successfully.');
     }
+    public function forceDelete($id){
+        $category = Category::onlyTrashed()->findOrFail($id);
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image); //* permanently delete image
+        }
+        $category->forceDelete();
+        return redirect()->route('categories.trash')->with('success', 'Category permanently deleted successfully.');
+    }
 }

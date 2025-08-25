@@ -11,6 +11,7 @@ Route::middleware('auth')->prefix('dashboard')
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');
         Route::put('/categories/{category}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
+        Route::delete('/categories/{category}/force-delete', [CategoryController::class, 'forceDelete'])->name('categories.forceDelete');
         Route::resource('categories',CategoryController::class);
     });
 

@@ -45,7 +45,7 @@
                     <button type="submit" class="btn btn-sm btn-success">Restore</button>
                 </form>
 
-                <form action="" method="POST" style="display:inline;">
+                <form action="{{ route('categories.forceDelete', $category->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger">Force Delete</button>
