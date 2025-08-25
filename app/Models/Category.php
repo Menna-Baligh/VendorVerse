@@ -17,12 +17,12 @@ class Category extends Model
         'status'
     ];
     public function scopeFilter(Builder $builder , $filters){
-        
+
         $builder->when($filters['name'] ?? false , function () use ($builder , $filters){
-            $builder->where('name' , 'like' , '%' . $filters['name'] . '%');
+            $builder->where('categories.name' , 'like' , '%' . $filters['name'] . '%');
         });
         $builder->when($filters['status'] ?? false , function () use ($builder , $filters){
-            $builder->where('status' , $filters['status']);
+            $builder->where('categories.status' , $filters['status']);
         });
 
     }

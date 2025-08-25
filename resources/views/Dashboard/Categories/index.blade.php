@@ -56,8 +56,8 @@
         <tr>
         <th scope="col">#</th>
         <th scope="col">Image</th>
-        <th scope="col">parent_id</th>
         <th scope="col">name</th>
+        <th scope="col">parent_name</th>
         <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -68,8 +68,9 @@
             <td>
                 <img src="{{ asset('storage/' . $category->image) }}" class="img-fluid" style="max-width: 100px; max-height: 100px; object-fit: cover;" alt="{{ $category->name }}">
             </td>
-            <td>{{ $category->parent_id }}</td>
             <td>{{ $category->name }}</td>
+            <td>{{ $category->parent_name }}</td>
+
             <td>
                 <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-info">View</a>
                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary">Edit</a>
