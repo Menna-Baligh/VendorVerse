@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use Bezhanov\Faker\Provider\Commerce;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +16,12 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->words(2,true);
+        $faker = $this->faker;
+        $faker->addProvider(new Commerce($faker));
+        $name = $faker->unique()->category;
         return [
             'name' => $name,
-            'slug' => \Str::slug($name),
+            'slug' => \Str::slug($name) . '-' . $this->faker->unique()->randomNumber(5),
             'description' => $this->faker->sentence(16),
             'image' => $this->faker->imageUrl(),
         ];

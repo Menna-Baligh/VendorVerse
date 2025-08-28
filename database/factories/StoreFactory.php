@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Bezhanov\Faker\Provider\Commerce;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store>
  */
@@ -16,10 +16,12 @@ class StoreFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->words(2,true);
+        $faker = $this->faker;
+        $faker->addProvider(new Commerce($faker));
+        $name = $faker->company;
         return [
             'name' => $name,
-            'slug' => \Str::slug($name),
+            'slug' => \Str::slug($name) . '-' . $this->faker->unique()->randomNumber(5),
             'description' => $this->faker->sentence(15),
             'logo_image' => $this->faker->imageUrl(600,600),
             'cover_image' => $this->faker->imageUrl(300,300),
