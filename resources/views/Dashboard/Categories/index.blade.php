@@ -59,6 +59,7 @@
         <th scope="col">Image</th>
         <th scope="col">name</th>
         <th scope="col">parent_name</th>
+        <th scope="col">Products #</th>
         <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -70,7 +71,8 @@
                 <img src="{{ asset('storage/' . $category->image) }}" class="img-fluid" style="max-width: 100px; max-height: 100px; object-fit: cover;" alt="{{ $category->name }}">
             </td>
             <td>{{ $category->name }}</td>
-            <td>{{ $category->parent_name }}</td>
+            <td>{{ $category->parent->name }}</td>
+            <td>{{ $category->products_count }}</td>
 
             <td>
                 <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-info">View</a>
@@ -84,7 +86,7 @@
         </tr>
         @empty
         <tr>
-            <td colspan="6" class="text-center">No categories found</td>
+            <td colspan="7" class="text-center">No categories found</td>
         </tr>
         @endforelse
 

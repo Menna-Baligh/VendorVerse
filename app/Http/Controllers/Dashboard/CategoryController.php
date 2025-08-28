@@ -21,14 +21,12 @@ class CategoryController extends Controller
          * SELECT a.* , b.name as parent_name from categories as a
          * left join categories as b on a.parent_id = b.id
          */
-        $categories = Category::leftJoin('categories as parent', 'categories.parent_id', '=', 'parent.id')
-                    ->select([
-                        'categories.*',
-                        'parent.name as parent_name'
-                    ])
+        $categories = Category::with('parent')
                     ->filter($request->query())
-                    ->orderby('categories.name') // to avoid ambiguity
+                    ->withCount('products')
+                    ->orderby('name')
                     ->paginate(3);
+
         return view('Dashboard.Categories.index', compact('categories'));
     }
 

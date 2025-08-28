@@ -87,8 +87,8 @@
                     @endif
                 </td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->store_id ?? '-' }}</td>
-                <td>{{ $product->category_id ?? '-' }}</td>
+                <td>{{ $product->store->name ?? '-' }}</td>
+                <td>{{ $product->category->name ?? '-' }}</td>
                 <td>${{ number_format($product->price, 2) }}</td>
                 <td>
                     @if($product->compare_price)
